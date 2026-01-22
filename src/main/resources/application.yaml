@@ -1,3 +1,12 @@
 spring:
   application:
     name: compras-ventas
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/compras_ventas_v4
+    username: postgres
+    password: 123456
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
