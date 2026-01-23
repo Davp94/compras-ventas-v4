@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.Builder;
 
+@Builder
 @Entity
 public class Rol {
 
@@ -31,8 +33,6 @@ public class Rol {
     )
     private List<Permiso> permisos;
 
-
-    
     public Rol() {
     }
 
