@@ -33,14 +33,18 @@ public class Rol {
     )
     private List<Permiso> permisos;
 
+    @ManyToMany(mappedBy = "roles")
+    private List<Usuario> usuarios;
+
     public Rol() {
     }
 
-    public Rol(Integer id, String nombreCompleto, String descripcion, List<Permiso> permisos) {
+    public Rol(Integer id, String nombreCompleto, String descripcion, List<Permiso> permisos, List<Usuario> usuarios) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
         this.descripcion = descripcion;
         this.permisos = permisos;
+        this.usuarios = usuarios;
     }
 
     public Integer getId() {
@@ -75,5 +79,12 @@ public class Rol {
         this.permisos = permisos;
     }
 
-    
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
 }
