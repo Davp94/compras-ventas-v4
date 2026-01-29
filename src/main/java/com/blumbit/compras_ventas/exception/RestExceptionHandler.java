@@ -29,15 +29,15 @@ public class RestExceptionHandler {
 
     }
 
-    @ExceptionHandler(value={MethodNotAllowedException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse<String>> handleValidationException(MethodNotAllowedException ex, HttpServletRequest request) {
-        return new ResponseEntity<>(ErrorResponse.<String>builder()
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .timestamp(new Date().toString())
-                .message(ex.getMessage())
-                .path(request.getRequestURI())
-                .build(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    // @ExceptionHandler(value={MethodNotAllowedException.class})
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // public ResponseEntity<ErrorResponse<String>> handleValidationException(MethodNotAllowedException ex, HttpServletRequest request) {
+    //     return new ResponseEntity<>(ErrorResponse.<String>builder()
+    //             .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+    //             .timestamp(new Date().toString())
+    //             .message(ex.getMessage())
+    //             .path(request.getRequestURI())
+    //             .build(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 
-    }
+    // }
 }

@@ -2,6 +2,8 @@ package com.blumbit.compras_ventas.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,7 +51,9 @@ public class Usuario {
     )
     private List<Rol> roles;
 
+    // BIDIRECCIONALIDAD
     @OneToOne(mappedBy = "usuario")
+    @JsonManagedReference("persona-usuario")
     private Persona persona;
 
 

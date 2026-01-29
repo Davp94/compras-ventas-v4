@@ -10,3 +10,14 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+logging:
+  level:
+    root: INFO  
+    org:
+      springframework:
+        web: DEBUG
+        orm: DEBUG
+        jdbc: DEBUG
+  file:
+    name: logs/compras-ventas.log
+    path: logs            
