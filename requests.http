@@ -1,0 +1,89 @@
+@host = http://localhost:8090
+
+### Health Check
+GET {{host}}/health
+
+### Permisos - Listar
+GET {{host}}/permiso
+
+### Permisos - Crear
+POST {{host}}/permiso
+Content-Type: application/json
+
+{
+    "nombre": "LECTURA_REPORTES",
+    "recurso": "REPORTES",
+    "accion": "LEER"
+}
+
+### Roles - Listar
+GET {{host}}/rol
+
+### Roles - Obtener por ID
+GET {{host}}/rol/ssss
+
+### Roles - Crear
+POST {{host}}/rol
+Content-Type: application/json
+
+{
+    "nombre": "ADMINISTRADOR",
+    "descripcion": "Rol con todos los permisos",
+    "permisos": [1]
+}
+
+### Roles - Actualizar
+PUT {{host}}/rol/1
+Content-Type: application/json
+
+{
+    "nombre": "ADMIN_MODIFICADO",
+    "descripcion": "Rol actualizado",
+    "permisos": [1]
+}
+
+### Roles - Eliminar
+DELETE {{host}}/rol/1
+
+### Usuarios - Listar
+GET {{host}}/usuario
+
+### Usuarios - Obtener por ID
+GET {{host}}/usuario/1
+
+### Usuarios - Crear
+POST {{host}}/usuario
+Content-Type: application/json
+
+{
+    "correo": "testd@example.com",
+    "password": "passworD1!",
+    "nombres": "Juand",
+    "apellidos": "Perez",
+    "fechaNacimiento": "05/05/1990",
+    "genero": "Masculino",
+    "telefono": "123456789",
+    "direccion": "Calle Falsa 123",
+    "nacionalidad": "Boliviana",
+    "roles": [1]
+}
+
+### Usuarios - Actualizar
+PUT {{host}}/usuario/1
+Content-Type: application/json
+
+{
+    "correo": "juan.perez@newmail.com",
+    "password": "NewPassword123!",
+    "nombres": "Juan Carlos",
+    "apellidos": "Perez Lopez",
+    "fechaNacimiento": "15/05/1990",
+    "genero": "Masculino",
+    "telefono": "987654321",
+    "direccion": "Av. Principal 456",
+    "nacionalidad": "Boliviana",
+    "roles": [1]
+}
+
+### Usuarios - Eliminar
+DELETE {{host}}/usuario/1

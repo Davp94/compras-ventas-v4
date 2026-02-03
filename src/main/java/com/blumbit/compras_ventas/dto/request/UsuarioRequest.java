@@ -1,6 +1,7 @@
 package com.blumbit.compras_ventas.dto.request;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.blumbit.compras_ventas.entity.Persona;
@@ -28,7 +29,7 @@ public class UsuarioRequest {
     @NotBlank(message = "El password es obligatorio")
     @Pattern(
         regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$",
-        message = "El correo debe tener 8 a 16 digitos con minusculas mayusculas y al menos un numero y caracter especial"
+        message = "El password debe tener 8 a 16 digitos con minusculas mayusculas y al menos un numero y caracter especial"
     )
     private String password;
 
@@ -74,7 +75,7 @@ public class UsuarioRequest {
         return Persona.builder()
         .nombres(usuarioRequest.getNombres())
         .apellidos(usuarioRequest.getApellidos())
-        .fechaNacimiento(LocalDate.parse(usuarioRequest.getFechaNacimiento()))
+        //.fechaNacimiento(LocalDate.parse(usuarioRequest.getFechaNacimiento()))
         .genero(usuarioRequest.getGenero())
         .telefono(usuarioRequest.getTelefono())
         .direccion(usuarioRequest.getDireccion())
