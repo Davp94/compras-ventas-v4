@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.blumbit.compras_ventas.auth.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +24,8 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
+    private final JwtAuthenticationFilter jwtFilter;
+
     //@Order(1)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -28,14 +33,19 @@ public class SecurityConfig {
             http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login").permitAll()
+                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/health").permitAll()
                     .requestMatchers("/auth/register").permitAll()
                     .requestMatchers("/ciudades").permitAll()
+                    .requestMatchers("/v3/api-docs").permitAll()
+                    .requestMatchers("/v3/api-docs/**").permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
                     .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider);
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
             return http.build();
         } catch (Exception e) {
             throw new RuntimeException("Error configuring security filter chain", e);

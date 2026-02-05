@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blumbit.compras_ventas.dto.request.UsuarioRequest;
@@ -30,10 +31,13 @@ public class UsuarioService implements IUsuarioService {
 
     private final RolRepository rolRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PersonaRepository personaRepository, RolRepository rolRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PersonaRepository personaRepository, RolRepository rolRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.personaRepository = personaRepository;
         this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -77,6 +81,7 @@ public class UsuarioService implements IUsuarioService {
                 throw new RuntimeException("No se encontraron roles para los IDs proporcionados");
             }
             usuarioToCreate.setRoles(roles);
+            usuarioToCreate.setPassword(passwordEncoder.encode(usuarioRequest.getPassword()));
             Usuario usuarioCreated = usuarioRepository.save(usuarioToCreate);
             Persona personaToCreate = UsuarioRequest.toEntityPersona(usuarioRequest);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -1,4 +1,5 @@
 @host = http://localhost:8090
+@token = your-jwt-token-here
 
 ### Health Check
 GET {{host}}/health
@@ -87,3 +88,16 @@ Content-Type: application/json
 
 ### Usuarios - Eliminar
 DELETE {{host}}/usuario/1
+
+### Auth - Login (Successful) @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "username": "testd@example.com",
+    "password": "passworD1!"
+}
+
+### Auth - Refresh Token (Invalid Token)
+POST {{host}}/login/refresh-token
+Authentication: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiJfdGVzdGRAZXhhbXBsZS5jb20iLCJzdWIiOiJ0ZXN0ZEBleGFtcGxlLmNvbSIsImlhdCI6MTc3MDI1MTcxNywiZXhwIjoxNzcwODU2NTE3fQ.QvMBcLhPJyLL6BWsnZKKv20sKCj9_AdGwOHybDix4SJ6xLFhTGmWIWQ86wnusGmNgOqoPTZgo7u8Xlyw3w0vdA
