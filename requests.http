@@ -6,6 +6,7 @@ GET {{host}}/health
 
 ### Permisos - Listar
 GET {{host}}/permiso
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiJfamVmZmllLmZhcnJlbGxAaG90bWFpbC5jb20iLCJzdWIiOiJqZWZmaWUuZmFycmVsbEBob3RtYWlsLmNvbSIsImlhdCI6MTc3MDY3ODA4MCwiZXhwIjoxNzcwNjc4OTgwfQ.aEQ1yqHo2_E_vu-eBFMO6EGt0t6bVKjlrGAK1nMjdH33vBPvjTsWuVJyJP65HPWAT35bO6YBH7FAdARxq5e1HQ
 
 ### Permisos - Crear
 POST {{host}}/permiso
