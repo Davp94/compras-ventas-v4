@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +52,9 @@ public class Usuario {
         inverseJoinColumns = @JoinColumn(name="rol_id")
     )
     private List<Rol> roles;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private List<SucursalUsuario> sucursalUsuarios;
 
     // BIDIRECCIONALIDAD
     @OneToOne(mappedBy = "usuario")

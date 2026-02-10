@@ -6,7 +6,7 @@ GET {{host}}/health
 
 ### Permisos - Listar
 GET {{host}}/permiso
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiJfamVmZmllLmZhcnJlbGxAaG90bWFpbC5jb20iLCJzdWIiOiJqZWZmaWUuZmFycmVsbEBob3RtYWlsLmNvbSIsImlhdCI6MTc3MDY3ODA4MCwiZXhwIjoxNzcwNjc4OTgwfQ.aEQ1yqHo2_E_vu-eBFMO6EGt0t6bVKjlrGAK1nMjdH33vBPvjTsWuVJyJP65HPWAT35bO6YBH7FAdARxq5e1HQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiJfbWlxdWVsLndlaW1hbm5AZ21haWwuY29tIiwic3ViIjoibWlxdWVsLndlaW1hbm5AZ21haWwuY29tIiwiaWF0IjoxNzcwNjgxMDM0LCJleHAiOjE3NzA2ODE5MzR9.07mrm1Kdl6Y9i2mWcQA60P-pH1tvrb7y_hi-iLMcVD9t0hVRJeyVvvisNfoVkmrGsPP9yZ_NKvPWx35xPuAxCg
 
 ### Permisos - Crear
 POST {{host}}/permiso
@@ -95,8 +95,8 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "username": "testd@example.com",
-    "password": "passworD1!"
+    "username": "miquel.weimann@gmail.com",
+    "password": "123456"
 }
 
 ### Auth - Refresh Token (Invalid Token)
