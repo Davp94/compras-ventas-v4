@@ -12,9 +12,20 @@ import jakarta.persistence.criteria.Predicate;
 
 public class ProductoSpecification {
 
-    public static Specification<Producto> createSpecification(ProductoFilterCriteria criteria){
+    public static Specification<Producto> createSpecification(ProductoFilterCriteria criteria, String filterValue){
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            if(filterValue != null && !filterValue.trim().isEmpty()){
+                String likeFilterValue = "%" + filterValue.toLowerCase() + "%";
+                predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("nombre")), likeFilterValue),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("descripcion")), likeFilterValue),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("codigoBarra")), likeFilterValue),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("marca")), likeFilterValue),
+                    criteriaBuilder.like(criteriaBuilder.lower(root.join("categoria").get("nombre")), likeFilterValue)
+                ));
+            }
 
             if(criteria.getNombre() != null && !criteria.getNombre().trim().isEmpty()){
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("nombre")),
@@ -38,6 +49,11 @@ public class ProductoSpecification {
 
             if(criteria.getNombreCategoria() != null && !criteria.getNombreCategoria().trim().isEmpty()){
                 predicates.add(criteriaBuilder.like(root.join("categoria").get("nombre"), "%" + criteria.getNombreCategoria() + "%"));
+            }
+
+            if(criteria.getAlmacenId() != null && criteria.getAlmacenId() > 0){
+                predicates.add(criteriaBuilder.equal(root.join("almacenProductos")
+                .get("almacen").get("id"), criteria.getAlmacenId()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

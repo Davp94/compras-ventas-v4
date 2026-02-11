@@ -17,4 +17,5 @@ public class ProductoFilterCriteria {
     private String codigoBarra;
     private String marca;
     private String nombreCategoria;
+    private Integer almacenId;
 }

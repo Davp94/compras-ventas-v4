@@ -38,4 +38,6 @@ public class Sucursal {
     @Column(length = 50)
     private String telefono;
 
+    private String ciudad;
+
 }
