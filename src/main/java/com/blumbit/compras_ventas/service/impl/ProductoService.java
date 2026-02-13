@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.blumbit.compras_ventas.common.PageableRequest;
 import com.blumbit.compras_ventas.common.PageableResponse;
+import com.blumbit.compras_ventas.dto.file.FileRequest;
+import com.blumbit.compras_ventas.dto.file.FileResponse;
 import com.blumbit.compras_ventas.dto.request.ProductoFilterCriteria;
 import com.blumbit.compras_ventas.dto.request.ProductoRequest;
 import com.blumbit.compras_ventas.dto.response.ProductoResponse;
@@ -32,6 +34,8 @@ public class ProductoService implements IProductoService {
     private final AlmacenProductoRepository almacenProductoRepository;
 
     private final CategoriaRepository categoriaRepository;
+
+    private final FileService fileService;
 
 
     @Override
@@ -77,7 +81,10 @@ public class ProductoService implements IProductoService {
         try {
             Producto productoToCreate = ProductoRequest.toEntity(productoRequest);
             productoToCreate.setCategoria(categoriaRepository.findById(productoRequest.getCategoriaId()).orElse(null));
-            //TODO ADD FILE MANAGEMENT
+            FileResponse createdFile = fileService.createFile(FileRequest.builder()
+                .file(productoRequest.getFile())
+                .build());
+            productoToCreate.setImagen(createdFile.getFilePath());    
             return ProductoResponse.fromEntity(productoRepository.save(productoToCreate));
         } catch (Exception e) {
             throw e;

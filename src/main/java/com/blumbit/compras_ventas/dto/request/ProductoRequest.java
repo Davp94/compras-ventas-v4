@@ -1,5 +1,7 @@
 package com.blumbit.compras_ventas.dto.request;
 
+import java.math.BigDecimal;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.blumbit.compras_ventas.entity.Producto;
@@ -19,9 +21,9 @@ public class ProductoRequest {
 
     private String nombre;
     private String descripcion;
-    private Double precioVentaActual;
+    private BigDecimal precioVentaActual;
     private String marca;
-    private MultipartFile file; //base64
+    private MultipartFile file; //base64->File
     private Integer categoriaId;
 
     public static Producto toEntity(ProductoRequest productoRequest){

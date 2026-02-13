@@ -1,5 +1,7 @@
 package com.blumbit.compras_ventas.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,7 +39,7 @@ public class Producto {
     private String codigoBarra;
 
     @Column(nullable = false)
-    private Double precioVentaActual;
+    private BigDecimal precioVentaActual;
 
     private String marca;
 

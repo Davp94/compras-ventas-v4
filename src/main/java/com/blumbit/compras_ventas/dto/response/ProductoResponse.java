@@ -1,5 +1,7 @@
 package com.blumbit.compras_ventas.dto.response;
 
+import java.math.BigDecimal;
+
 import com.blumbit.compras_ventas.entity.Producto;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +20,7 @@ public class ProductoResponse {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private Double precioVentaActual;
+    private BigDecimal precioVentaActual;
     private String codigoBarra;
     private String imagen;
     private String nombreCategoria;
