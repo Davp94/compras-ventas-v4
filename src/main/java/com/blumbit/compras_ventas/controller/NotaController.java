@@ -2,7 +2,9 @@ package com.blumbit.compras_ventas.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +30,12 @@ public class NotaController {
     private final INotaService notaService;
 
     @PostMapping
-    public ResponseEntity<NotaResponse> createNota(@Valid @RequestBody NotaRequest notaRequest) {
-        NotaResponse notaResponse = notaService.createNota(notaRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(notaResponse);
+    public ResponseEntity<byte[]> createNota(@Valid @RequestBody NotaRequest notaRequest) {
+        byte[] notaResponse = notaService.createNota(notaRequest);
+        return ResponseEntity.ok()
+        .contentType(MediaType.APPLICATION_PDF)
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment: filename=nota-report.pdf")
+        .body(notaResponse);
     }
 
 

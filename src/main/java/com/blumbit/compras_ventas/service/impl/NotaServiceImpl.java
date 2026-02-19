@@ -1,7 +1,9 @@
 package com.blumbit.compras_ventas.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import com.blumbit.compras_ventas.repository.ProductoRepository;
 import com.blumbit.compras_ventas.repository.AlmacenProductoRepository;
 import com.blumbit.compras_ventas.repository.AlmacenRepository;
 import com.blumbit.compras_ventas.service.spec.INotaService;
+import com.blumbit.compras_ventas.service.spec.IPdfService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -41,10 +44,11 @@ public class NotaServiceImpl implements INotaService {
     private final ProductoRepository productoRepository;
     private final AlmacenRepository almacenRepository;
     private final AlmacenProductoRepository almacenProductoRepository;
+    private final IPdfService pdfService;
 
     @Override
     @Transactional
-    public NotaResponse createNota(NotaRequest notaRequest) {
+    public byte[] createNota(NotaRequest notaRequest) {
         Usuario usuario = usuarioRepository.findById(notaRequest.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -89,9 +93,12 @@ public class NotaServiceImpl implements INotaService {
                 }
                 almacenProductoRepository.save(almacenProductoRetrieved);    
         }
-        //TODO generar reporte de nota
-        //VER MVC -> Thymeleaf
-        return NotaResponse.fromEntity(notaGuardada);
+        //genrar reporte de notas
+        Map<String, Object> data = new HashMap<>();
+        data.put("nota", notaGuardada);
+        data.put("movimientos", movimientosCreated);
+       
+        return  pdfService.generatePdfFromHtml("nota-report", data);
     }
 
     @Override

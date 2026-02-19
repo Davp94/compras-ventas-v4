@@ -12,6 +12,6 @@ public interface INotaService {
 
     List<NotaResponse> getAllNotas();
 
-    NotaResponse createNota(NotaRequest notaRequest);
+    byte[] createNota(NotaRequest notaRequest);
 
 }
