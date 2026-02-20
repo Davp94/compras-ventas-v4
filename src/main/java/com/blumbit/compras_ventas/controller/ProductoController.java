@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class ProductoController {
     private final IProductoService productoService;
 
     @GetMapping("/paginacion")
+    @PreAuthorize("hasAuthority('ROL_ADMIN') or hasAuthority('ROL_USER') or hasAuthority('VER_PRODUCTOS')")
     public ResponseEntity<PageableResponse<ProductoResponse>> getProductosPaginacion(
         @RequestParam(defaultValue = "10") Integer pageSize,
         @RequestParam(defaultValue = "0") Integer pageNumber,

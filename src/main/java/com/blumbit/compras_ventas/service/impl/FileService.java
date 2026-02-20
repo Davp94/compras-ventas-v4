@@ -19,6 +19,7 @@ import com.blumbit.compras_ventas.dto.file.FileRequest;
 import com.blumbit.compras_ventas.dto.file.FileResponse;
 import com.blumbit.compras_ventas.service.spec.IFileService;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -30,6 +31,7 @@ public class FileService implements IFileService{
 
     private Path fileStorageLocation;
 
+    @PostConstruct
     public void init() {
         try {
             this.fileStorageLocation = Paths.get(filePath).toAbsolutePath().normalize();
@@ -49,7 +51,7 @@ public class FileService implements IFileService{
             return FileResponse.builder().filePath(fileName).build();
         } catch (Exception e) {
             log.error("Error al crear archivo", e);
-            throw new RuntimeException("Error al crear el archivo");
+            throw new RuntimeException("Error al crear el archivo", e);
         }
     }
 

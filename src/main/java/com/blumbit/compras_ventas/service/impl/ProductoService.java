@@ -24,9 +24,11 @@ import com.blumbit.compras_ventas.repository.specification.ProductoSpecification
 import com.blumbit.compras_ventas.service.spec.IProductoService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ProductoService implements IProductoService {
 
     private final ProductoRepository productoRepository;
@@ -41,8 +43,8 @@ public class ProductoService implements IProductoService {
     @Override
     public PageableResponse<ProductoResponse> getProductosPaginacion(
             PageableRequest<ProductoFilterCriteria> pageableRequest) {
-        
-        Sort sort = pageableRequest.getSortOrder().equalsIgnoreCase("asc") 
+        try {
+             Sort sort = pageableRequest.getSortOrder().equalsIgnoreCase("asc") 
         ? Sort.by(pageableRequest.getSortField()).ascending()
         : Sort.by(pageableRequest.getSortField()).descending();
 
@@ -52,7 +54,7 @@ public class ProductoService implements IProductoService {
             sort
         );
 
-        Specification<Producto> specification = Specification.where((Specification<Producto>) null);
+        Specification<Producto> specification = null;
         if(pageableRequest.getCriterials() !=null){
           specification = ProductoSpecification.createSpecification(pageableRequest.getCriterials(), pageableRequest.getFilterValue());
         }
@@ -66,6 +68,11 @@ public class ProductoService implements IProductoService {
             .totalElements(productoPage.getTotalElements())
             .totalPages(productoPage.getTotalPages())
             .build();
+        } catch (Exception e) {
+            log.error("error exception: {}", e.getMessage(), e);
+            throw new RuntimeException("Error recuperando paginated products");
+        }
+       
         
     }
 
@@ -87,6 +94,7 @@ public class ProductoService implements IProductoService {
             productoToCreate.setImagen(createdFile.getFilePath());    
             return ProductoResponse.fromEntity(productoRepository.save(productoToCreate));
         } catch (Exception e) {
+            log.error("Error creando producto", e);
             throw e;
         }
     }

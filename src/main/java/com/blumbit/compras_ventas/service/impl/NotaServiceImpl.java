@@ -32,9 +32,11 @@ import com.blumbit.compras_ventas.service.spec.IPdfService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotaServiceImpl implements INotaService {
 
     private final NotaRepository notaRepository;
@@ -64,7 +66,7 @@ public class NotaServiceImpl implements INotaService {
         //crear movimientos
         List<Movimiento> movimientosCreated = new ArrayList<>();
         for(MovimientoRequest movimientoRequest : notaRequest.getMovimientos()) {
-            if(validStock(movimientoRequest)){
+            //if(validStock(movimientoRequest)){
                 Movimiento movimientoToCreate = MovimientoRequest.toEntity(movimientoRequest);
                 movimientoToCreate.setNota(notaGuardada);
                 movimientoToCreate.setProducto(productoRepository.findById(movimientoRequest.getProductoId())
@@ -72,9 +74,9 @@ public class NotaServiceImpl implements INotaService {
                 movimientoToCreate.setAlmacen(almacenRepository.findById(movimientoRequest.getAlmacenId())
                         .orElseThrow(() -> new RuntimeException("Almacen no encontrado")));
                 movimientosCreated.add(movimientoRepository.save(movimientoToCreate));       
-            }else {
-                throw new RuntimeException("Error al validar stock");
-            }
+            //}else {
+             //   throw new RuntimeException("Error al validar stock");
+            //}
         }
         //Update stock
         for(Movimiento movimiento : movimientosCreated) {
@@ -110,11 +112,13 @@ public class NotaServiceImpl implements INotaService {
 
     private boolean validStock(MovimientoRequest movimientoRequest) {
         try {
-            return movimientoRequest.getTipoMovimiento() == TipoMovimiento.SALIDA.toString()
+            boolean valid = movimientoRequest.getTipoMovimiento() == TipoMovimiento.SALIDA.toString()
              && movimientoRequest.getCantidad() <= almacenProductoRepository
              .findByAlmacen_IdAndProducto_Id(movimientoRequest.getAlmacenId(), movimientoRequest.getProductoId())
              .get().getStock();
+            return valid;
         } catch (Exception e) {
+            log.error("erro validando stock", e);
             throw new RuntimeException("Error al validar el stock: " + e.getMessage());
         }
     }
