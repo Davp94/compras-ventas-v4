@@ -11,9 +11,11 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import com.blumbit.compras_ventas.service.spec.IPdfService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PdfServiceImpl implements IPdfService{
 
     private final TemplateEngine templateEngine;
@@ -31,6 +33,7 @@ public class PdfServiceImpl implements IPdfService{
             renderer.createPDF(outputStream);
             return outputStream.toByteArray();
         } catch (Exception e) {
+            log.error("Error generando PDF", e);
             throw new RuntimeException("Error generando PDF", e);
         }
     }   

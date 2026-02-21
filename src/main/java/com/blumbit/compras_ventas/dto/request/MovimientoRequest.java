@@ -25,9 +25,6 @@ public class MovimientoRequest {
     @NotNull(message = "El almacén es requerido")
     private Integer almacenId;
 
-    @NotNull(message = "El almacén es requerido")
-    private Integer notaId;
-
     @NotNull(message = "La cantidad es requerida")
     @Positive(message = "La cantidad debe ser mayor a 0")
     private Integer cantidad;

@@ -41,6 +41,8 @@ public class SecurityConfig {
                     .requestMatchers("/v3/api-docs/**").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/productos").hasAnyAuthority("VER_PRODUCTOS", "CREAR_PRODUCTO")
+                    .requestMatchers("/productos/paginacion", "/productos/paginacion/**").hasAuthority("ROL_ADMIN")
+                    .requestMatchers("/notas", "/notas/**").hasAuthority("ROL_CAJERO")
                     .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())

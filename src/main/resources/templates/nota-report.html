@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
         body {
@@ -8,22 +8,22 @@
         }
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: row;
+            justify-content: start;
+            align-items: start;
             margin-bottom: 20px;
             border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
         .header-left {
-            width: 70%;
+            width: auto;
         }
         .header-right {
-            width: 30%;
-            text-align: right;
+            width: auto;
         }
         .logo {
-            max-width: 150px;
-            height: auto;
+            max-width: 100px;
+            height: 100px;
         }
         .nota-title {
             font-size: 24px;
@@ -50,8 +50,6 @@
             font-weight: bold;
         }
     </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota Report</title>
 </head>
 <body>
@@ -62,7 +60,7 @@
             <div>Usuario: <span th:text="${nota.usuario.nombre}"></span></div>
         </div>
         <div class="header-right">
-            <img th:src="@{classpath:/static/logo-blumbit-color1.png}" alt="Company Logo" class="logo">
+            <img th:src="@{classpath:/static/logo-blumbit-color1.png}" alt="Company Logo" class="logo"></img>
         </div>
     </div>
 
